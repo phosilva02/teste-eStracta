@@ -8,8 +8,16 @@ $url = 'http://www.sintegra.fazenda.pr.gov.br/sintegra/';
 // Instanciar a classe WebCrawler
 $crawler = new WebCrawler($url);
 
-// Chamar o método de busca
-$result = $crawler->search();
+echo 'Digite o cnpj: ';
+$cnpj = trim(fgets(STDIN));
 
-// Exibir os resultados
-print_r($result);
+        
+$cnpjFormatado = substr($cnpj, 0, 2) . '.' . substr($cnpj, 2, 3) . '.' . substr($cnpj, 5, 3) . '/' . substr($cnpj, 8, 4) . '-' . substr($cnpj, 12, 2);
+// Chamar o método de busca
+try{
+    $result = $crawler->search($cnpjFormatado);
+    print_r($result);
+}
+catch(\Exception $exp){
+    print_r($exp->getMessage());
+}
